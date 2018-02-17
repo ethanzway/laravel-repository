@@ -1,0 +1,24 @@
+{
+  "name": "ethanzway/laravel-repository",
+  "keywords": ["laravel", "repository"],
+  "description": "Laravel Repository Service Provider",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.6.4",
+    "illuminate/support": "5.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ethanzway\\Repository\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "\\Ethanzway\\Repository\\Providers\\RepositoryServiceProvider"
+      ]
+    }
+  }
+}
+
