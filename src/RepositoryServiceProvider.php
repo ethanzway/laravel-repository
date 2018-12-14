@@ -1,5 +1,5 @@
 <?php
-namespace Ethanzway\Repository\Providers;
+namespace Ethanzway\Repository;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -21,10 +21,8 @@ class RepositoryServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../Config/config.php' => config_path('repository.php')
+            __DIR__ . '/../config/config.php' => config_path('repository.php')
         ]);
-
-        $this->mergeConfigFrom(__DIR__ . '/../Config/config.php', 'repository');
     }
 
 
@@ -35,6 +33,24 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfig();
+        $this->registerRepositories();
+    }
+
+    /**
+     * Merge config
+     */
+    protected function mergeConfig()
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'repository');
+    }
+
+
+    public function registerRepositories()
+    {
+        foreach($this->app['config']['repository.bindings'] as $abstract => $concrete) {
+            $this->app->bind($abstract, $concrete);
+        }
     }
 
 
