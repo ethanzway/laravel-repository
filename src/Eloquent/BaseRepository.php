@@ -55,7 +55,9 @@ abstract class BaseRepository implements RepositoryInterface
         $this->applyScope();
         
         $model = $this->model->findOrFail($id, $columns);
+
         $this->resetModel();
+        $this->resetScope();
 
         return $this->parserResult($model);
     }
@@ -101,6 +103,7 @@ abstract class BaseRepository implements RepositoryInterface
         $results = $this->model->first($columns);
 
         $this->resetModel();
+        $this->resetScope();
 
         return $this->parserResult($results);
     }
@@ -128,7 +131,9 @@ abstract class BaseRepository implements RepositoryInterface
         $limit = is_null($limit) ? config('repository.pagination.limit', 15) : $limit;
         $results = $this->model->{$method}($limit, $columns, $characteristic);
         $results->appends(app('request')->query());
+
         $this->resetModel();
+        $this->resetScope();
 
         return $this->parserResult($results);
     }
